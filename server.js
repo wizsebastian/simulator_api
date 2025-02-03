@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const port = process.env.PORT || 3000;
+const isProduction = process.env.NODE_ENV === 'production';
 
 app.use(bodyParser.json());
 
@@ -32,7 +33,11 @@ app.post('/execute-script', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`🚀 Server running at: 🌍 http://localhost:${port}`);
+  if (isProduction) {
+    console.log(`🚀 Server running in PRODUCTION environment! 🏭 Port: ${port}`);
+  } else {
+    console.log(`🚀 Server running in DEVELOPMENT mode at: 🌍 http://localhost:${port}`);
+  }
 });
 
 module.exports = app;
